@@ -10,7 +10,7 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
-                str = str.replace(strArr[ 0 ], '<span class="yuan-link-line-message" style="display: inline-block;color: #3184ff;padding-top: 5px;" >' + escape(strArr[ 1 ].trim()) + '</span>')
+                str = str.replace(strArr[ 0 ], '<span class="yuan-link-line-message" style="display: inline-block;color: #3184ff;padding-top: 5px;" >' + strArr[ 1 ].trim() + '</span>')
                          .trim();
             }
             return str;
@@ -27,7 +27,8 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
-                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ] + '</span>')
+                console.log("strArr[4] :", strArr[ 4 ]);
+                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ].trim() + '</span>')
                          .trim();
             }
             return str;
@@ -101,21 +102,21 @@ class ChatWindow {
         let url = `${this.apiUrl}?i=${this.user}&u=${this.baseUrl}&kw=${this.result}&zt=${this.ztName}`;
 
         $.get(url)
-              .then( (data, res, d) => {
-                  if (d.status === 200) {
-                      this.responseMessage = this._parseResponseMessage(data.message);
-                      if (data.template) {
-                          this.template = data.template;
-                          this._createTemplate(data.template);
-                      }
-                  }
-              })
-              .catch((res) => {
-                  let response = res.responseJSON;
-                  if (response.status && response.status === 400) {
-                      console.log(message);
-                  }
-              })
+         .then((data, res, d) => {
+             if (d.status === 200) {
+                 this.responseMessage = this._parseResponseMessage(data.message);
+                 if (data.template) {
+                     this.template = data.template;
+                     this._createTemplate(data.template);
+                 }
+             }
+         })
+         .catch((res) => {
+             let response = res.responseJSON;
+             if (response.status && response.status === 400) {
+                 console.log(message);
+             }
+         })
     }
 
     _parseResponseMessage(message) {
@@ -324,8 +325,8 @@ class ChatWindow {
 
             if (el.hasClass('y-footer-input')) {
                 el.height('6.5vw');
-                let height       = el.height();
-                console.log("height :",height);
+                let height = el.height();
+                console.log("height :", height);
                 let scrollHeight = el.prop('scrollHeight');
                 el.height((scrollHeight / height < 3 ? scrollHeight : 3 * height));
             }
