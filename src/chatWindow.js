@@ -10,6 +10,7 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
+                console.log("strArr[1] :", strArr[ 1 ]);
                 str = str.replace(strArr[ 0 ], '<span class="yuan-link-line-message" style="display: inline-block;color: #3184ff;padding-top: 5px;" >' + strArr[ 1 ].trim() + '</span>')
                          .trim();
             }
@@ -27,9 +28,7 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
-                console.log("strArr[4] :", strArr[ 4 ]);
-                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ].trim() + '</span>')
-                         .trim();
+                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ].trim() + '</span>').trim();
             }
             return str;
         }
