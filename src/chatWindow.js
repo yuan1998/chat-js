@@ -163,7 +163,7 @@ class ChatWindow {
             this.input.val('');
             this._inputStatus('');
         })
-    };
+    }
 
     _checkEnter() {
         let m    = moment();
@@ -262,7 +262,7 @@ class ChatWindow {
                 this._appendMessage(item);
             }, time);
         })
-    };
+    }
 
     _appendMessage(item) {
         let tmp = this.template[ item.type ];
@@ -280,7 +280,7 @@ class ChatWindow {
         item.time && this._createTime(item.time);
         el.appendTo(this.mainContent);
         this._elScrollBottom(this.main);
-    };
+    }
 
     _createTime(time) {
         $('<div class="y-pop-wrap y-pop-time"><p>' + time.format("H:mm:ss") + '</p></div>').appendTo(this.mainContent);
@@ -337,18 +337,10 @@ class ChatWindow {
         return m;
     }
 
-    _monitorPopState() {
-        $(window).on('popstate', (evt) => {
-            let state = evt.originalEvent.state;
-            if (state.chat) {
-                this._closeTemplate();
-            }
-        })
-    }
 
     _closeTemplate() {
         this.templateContainer.css('display', 'none');
-    };
+    }
 
     openTemplate() {
         this.templateContainer.css('display', 'block');

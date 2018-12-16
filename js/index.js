@@ -58,30 +58,35 @@
         return result;
     }
 
-    function testOf(reg, href) {
-        href = href || window.location.href;
-        return reg.test(href);
+    function getAttribute(prefix) {
+        return {
+            user  : $(prefix + 'user-id').attr('content'),
+            kstUrl: $(prefix + 'kst-url').attr('content'),
+            api   : $(prefix + 'default-api').attr('content') || 'https://yuan.西安画美.com/api/domainSetting',
+            result: $(prefix + 'default-result') || checkReferrer(),
+        }
     }
 
     try {
-        var result = checkReferrer();
-
-        if (!!result) {
-            window.result = result;
-
-            $.getScript('../dist/chatWindow.bundle.js')
-             .then(function () {
-                 var options = {
-                     api          : 'https://yuan.西安画美.com/api/domainSetting',
-                     user         : 8,
-                     result       : result,
-                     kstUrl       : 'https://vipk16-hztk11.kuaishang.cn/bs/im.htm?cas=116432___982318&fi=118952',
-                     testHref     : 'http://vip1.kq120.vip/zt/R640101-02/index.html',
-                     defaultResult: '口腔问题',
-                 };
-                 var test    = new ChatWindow(options);
-             })
+        var attribute = getAttribute('yuan-');
+        console.log("attribute :",attribute);
+        if (!attribute['user'] || !attribute['kstUrl'] || !attribute['api'] || !attribute['result']){
+            return;
         }
+        console.log("Start !!! ");
+
+        window.result = result;
+
+        $.getScript('../dist/chatWindow.bundle.js')
+         .then(function () {
+             var options = {
+                 api   : 'https://yuan.西安画美.com/api/domainSetting',
+                 user  : 8,
+                 result: result,
+                 kstUrl: 'https://vipk16-hztk11.kuaishang.cn/bs/im.htm?cas=116432___982318&fi=118952',
+             };
+             var test    = new ChatWindow(options);
+         })
     } catch (e) {
         console.log(e);
     }
