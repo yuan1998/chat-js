@@ -100,14 +100,13 @@ class ChatWindow {
     _getMessage() {
         let url = `${this.apiUrl}?i=${this.user}&u=${this.baseUrl}&kw=${this.result}&zt=${this.ztName}`;
 
-        let me = this;
-        jQuery.get(url)
-              .then(function (data, res, d) {
+        $.get(url)
+              .then( (data, res, d) => {
                   if (d.status === 200) {
-                      me.responseMessage = me._parseResponseMessage(data.message);
+                      this.responseMessage = this._parseResponseMessage(data.message);
                       if (data.template) {
-                          me.template = data.template;
-                          me._createTemplate(data.template);
+                          this.template = data.template;
+                          this._createTemplate(data.template);
                       }
                   }
               })
@@ -291,6 +290,15 @@ class ChatWindow {
         linkLine.length > 0 && this._addLinkLineEvent(linkLine);
     }
 
+    _monitorPopState() {
+        $(window).on('popstate', (evt) => {
+            let state = evt.originalEvent.state;
+            if (state.chat) {
+                this._closeTemplate();
+            }
+        })
+    };
+
     _addLinkLineEvent(el) {
         el.on('click', (evt) => {
             evt.preventDefault();
@@ -336,7 +344,6 @@ class ChatWindow {
 
         return m;
     }
-
 
     _closeTemplate() {
         this.templateContainer.css('display', 'none');
