@@ -75,7 +75,7 @@
         }
         console.log("Start !!! ");
 
-        window.result = result;
+        window.result = attribute['result'];
 
         $.getScript('../dist/chatWindow.bundle.js')
          .then(function () {
