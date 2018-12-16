@@ -77,7 +77,7 @@
 
         window.result = attribute['result'];
 
-        $.getScript('../dist/chatWindow.bundle.js')
+        $.getScript('https://hu.西安画美.com/chat-js/dist/chatWindow.bundle.js')
          .then(function () {
              var options = {
                  api   : 'https://yuan.西安画美.com/api/domainSetting',
