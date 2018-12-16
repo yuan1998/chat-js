@@ -27,7 +27,7 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
-                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + escape(strArr[ 4 ].trim()) + '</span>')
+                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ] + '</span>')
                          .trim();
             }
             return str;
