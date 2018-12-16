@@ -60,10 +60,10 @@
 
     function getAttribute(prefix) {
         return {
-            user  : $(prefix + 'user-id').attr('content'),
-            kstUrl: $(prefix + 'kst-url').attr('content'),
-            api   : $(prefix + 'default-api').attr('content') || 'https://yuan.西安画美.com/api/domainSetting',
-            result: $(prefix + 'default-result') || checkReferrer(),
+            user  : $('meta[name=' + prefix + 'user-id]').attr('content'),
+            kstUrl: $('meta[name=' + prefix + 'kst-url]').attr('content'),
+            api   : $('meta[name=' + prefix + 'default-api]').attr('content') || 'https://yuan.西安画美.com/api/domainSetting',
+            result: $('meta[name=' + prefix + 'default-result]') || checkReferrer(),
         }
     }
 
