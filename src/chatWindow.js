@@ -325,7 +325,7 @@ class ChatWindow {
             if (el.hasClass('y-footer-input')) {
                 el.height('6.5vw');
                 let height = el.height();
-                console.log("height :", height);
+
                 let scrollHeight = el.prop('scrollHeight');
                 el.height((scrollHeight / height < 3 ? scrollHeight : 3 * height));
             }
