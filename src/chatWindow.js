@@ -255,7 +255,10 @@ class ChatWindow {
         let time = 0;
         message.forEach((item) => {
             time += (item.duration || 0);
-            parse && (item.value = this.yuanDown.parseString(item.value));
+
+            if (parse && item.type !== 'custom') {
+                item.value = this.yuanDown.parseString(item.value)
+            }
 
             setTimeout(() => {
                 this._appendMessage(item);
