@@ -276,7 +276,12 @@ class ChatWindow {
 
         let el = $(tmp);
 
-        el.find('.text-content').html(item.value);
+        if (el.hasClass('text-content')) {
+            el.html(item.value);
+        }
+        else {
+            el.find('.text-content').html(item.value);
+        }
         this._contentAddEvent(el);
 
         item.time && this._createTime(item.time);
