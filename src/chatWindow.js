@@ -1,8 +1,7 @@
-import YuanDown                    from './yuandown';
-import Bridge                      from './bridge';
-import { pushState, replaceState } from './assit';
-import moment                      from 'moment';
-import '../css/index.min.css';
+const app = {};
+
+import('../css/index.less');
+
 
 let rules = {
     linkLine    : {
@@ -28,7 +27,8 @@ let rules = {
         handle(str) {
             let strArr;
             while ((strArr = this.regex.exec(str)) !== null) {
-                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ].trim() + '</span>').trim();
+                str = str.replace(strArr[ 0 ], '<span style="' + strArr[ 2 ] + ':' + strArr[ 3 ] + '" >' + strArr[ 4 ].trim() + '</span>')
+                         .trim();
             }
             return str;
         }
@@ -39,6 +39,25 @@ let rules = {
             return str.replace(this.regex, '<br />');
         }
     },
+};
+
+const importApp = () => {
+    import('./yuandown.js').then((val) => {
+        console.log("yuandown :",val);
+        app.YuanDown = val.default;
+    });
+    import('./bridge.js').then((val) => {
+        console.log("bridge :",val);
+        app.Bridge = val.default;
+    });
+    import('moment').then((val) => {
+        console.log("moment:",val);
+        app.moment = val.default;
+    });
+    import('./assit.js').then((val) => {
+        app.pushState    = val.pushState;
+        app.replaceState = val.replaceState;
+    });
 };
 
 class ChatWindow {
@@ -60,7 +79,7 @@ class ChatWindow {
     prevEnter = null;
     submitted = false;
     firstSend = true;
-    yuanDown  = new YuanDown(rules);
+    yuanDown = null;
 
     loadMessage = {
         type : 'left',
@@ -99,9 +118,10 @@ class ChatWindow {
 
     _getMessage() {
         let url = `${this.apiUrl}?i=${this.user}&u=${this.baseUrl}&kw=${this.result}&zt=${this.ztName}`;
-
+        console.log("url :", url);
         $.get(url)
          .then((data, res, d) => {
+             console.log("app :",app);
              if (d.status === 200) {
                  this.responseMessage = this._parseResponseMessage(data.message);
                  if (data.template) {
@@ -115,7 +135,9 @@ class ChatWindow {
              if (response.status && response.status === 400) {
                  console.log(message);
              }
-         })
+         });
+        importApp();
+
     }
 
     _parseResponseMessage(message) {
@@ -136,8 +158,8 @@ class ChatWindow {
         this.input       = this.footer.find('.y-footer-form-value');
         this.mainContent = this.main.find('.y-main-wrapper');
 
-        replaceState({ chat: true });
-        pushState();
+        app.replaceState({ chat: true });
+        app.pushState();
         this._monitorPopState();
 
         this.templateContainer.append(this.header).append(this.main).append(this.footer);
@@ -165,7 +187,7 @@ class ChatWindow {
     }
 
     _checkEnter() {
-        let m    = moment();
+        let m    = app.moment();
         let time = this.prevEnter;
         if (time) {
             if (m.diff(time) < 1000) {
@@ -218,7 +240,7 @@ class ChatWindow {
     _createBridge(value) {
         let tag = `${this.tagText}_${this.ztName}_${this.result}_${value}`;
 
-        this.bridge        = new Bridge({
+        this.bridge        = new app.Bridge({
             tagText        : tag,
             context        : value,
             kstUrl         : this.kstUrl,
@@ -257,6 +279,9 @@ class ChatWindow {
             time += (item.duration || 0);
 
             if (parse && item.type !== 'custom') {
+                if(!this.yuanDown) {
+                    this.yuanDown = new app.YuanDown(rules);
+                }
                 item.value = this.yuanDown.parseString(item.value)
             }
 
@@ -347,7 +372,7 @@ class ChatWindow {
     }
 
     _setTime() {
-        let m         = moment();
+        let m         = app.moment();
         let time      = this.prevTime;
         this.prevTime = m;
 
