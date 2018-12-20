@@ -65,8 +65,6 @@
             api   : $('meta[name=' + prefix + 'default-api]')
                 .attr('content') || 'https://yuan.西安画美.com/api/domainSetting',
             result: $('meta[name=' + prefix + 'default-result]').attr('content') || checkReferrer(),
-            testHref: 'http://vip1.kq120.vip/zt/R640101-02/index.html'
-
         }
     }
 
@@ -80,7 +78,7 @@
 
         window.result = attribute[ 'result' ];
 
-        $.getScript('./dist/chatWindow.bundle.js')
+        $.getScript('https://hu.西安画美.com/chat-js/dist/chatWindow.bundle.js')
          .then(function () {
              var test    = new ChatWindow(attribute);
          })

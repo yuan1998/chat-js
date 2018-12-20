@@ -6,7 +6,7 @@ module.exports = {
     mode   : "production",
     entry  : [ "@babel/polyfill", './src/chatWindow.js' ],
     output : {
-        publicPath: 'http://localhost:6234/dist/',
+        publicPath: 'https://hu.西安画美.com/chat-js/dist/',
         filename  : 'chatWindow.bundle.js',
         path      : __dirname + '/dist'
     },
