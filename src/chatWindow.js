@@ -1,8 +1,8 @@
-const app = {};
-
 import('../css/index.less');
 
 
+
+const app = {};
 let rules = {
     linkLine    : {
         regex: /(?:#!)\s*(.*?)\s*#*\s*(?:!#)/m,
@@ -118,10 +118,9 @@ class ChatWindow {
 
     _getMessage() {
         let url = `${this.apiUrl}?i=${this.user}&u=${this.baseUrl}&kw=${this.result}&zt=${this.ztName}`;
-        console.log("url :", url);
+        importApp();
         $.get(url)
          .then((data, res, d) => {
-             console.log("app :",app);
              if (d.status === 200) {
                  this.responseMessage = this._parseResponseMessage(data.message);
                  if (data.template) {
@@ -136,7 +135,6 @@ class ChatWindow {
                  console.log(message);
              }
          });
-        importApp();
 
     }
 
